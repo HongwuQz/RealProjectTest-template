@@ -3,7 +3,7 @@ const userList = [
     nick: 'Hongwu',
     phone: 13949159737,
     name: 'HongwuQz',
-    project: 'FrontDevelop',
+    subject: 'FrontDevelop',
     job: 'student',
     year: 21,
     updateTime: '2021-11-4'
@@ -12,7 +12,7 @@ const userList = [
     nick: 'Hongwu',
     phone: 13949159737,
     name: 'HongwuQz',
-    project: 'FrontDevelop',
+    subject: 'FrontDevelop',
     job: 'student',
     year: 21,
     updateTime: '2021-11-4'
@@ -21,7 +21,7 @@ const userList = [
     nick: 'Hongwu',
     phone: 13949159737,
     name: 'HongwuQz',
-    project: 'FrontDevelop',
+    subject: 'FrontDevelop',
     job: 'student',
     year: 21,
     updateTime: '2021-11-4'

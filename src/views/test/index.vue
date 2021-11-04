@@ -1,20 +1,19 @@
 <template>
   <div class="test-content">
     <list-layout>
-      <template name="header">
+      <template slot="header">
         123
       </template>
-      <template name="content">
-        <lb-table :column="formData.column" :data="formData.list" :pagination="true" />
+      <template slot="content">
+        <lb-table :column="formData.column" :data="formData.data" :pagination="true" />
       </template>
     </list-layout>
-
   </div>
 </template>
 
 <script>
 import { getTestList } from '@/api/test.js'
-import ListLayout from '@/components/ListLayout'
+import ListLayout from '@/components/ListLayout/index.vue'
 import LbTable from '@/components/lb-table/lb-table.vue'
 export default {
   name: 'TestContent',
@@ -27,39 +26,43 @@ export default {
       formData: {
         column: [
           {
-            props: 'nick',
+            prop: 'nick',
             label: '昵称'
           },
           {
-            props: 'phone',
+            prop: 'phone',
             label: '手机号'
           },
           {
-            props: 'name',
+            prop: 'name',
             label: '真实姓名'
           },
           {
-            props: 'project',
-            label: '职务'
+            prop: 'subject',
+            label: '所属学科'
           },
           {
-            props: 'job',
+            prop: 'job',
             label: '职位'
           },
           {
-            props: 'year',
+            prop: 'year',
             label: '年龄'
           },
           {
-            props: 'updateTime',
+            prop: 'updateTime',
             label: '上传日期'
           },
           {
-            props: 'actions',
-            label: '操作'
+            prop: 'actions',
+            label: '操作',
+            render(_, scope) {
+              return (<el-button>编辑</el-button>)
+            }
           }
 
-        ]
+        ],
+        data: []
       }
     }
   },
@@ -67,7 +70,9 @@ export default {
     getTestList().then((result) => {
       const { code, data } = result
       if (Number(code) === 20000) {
-        console.log(data)
+        const { items } = data
+        this.formData.data = items
+        console.log(this.formData.data)
       }
     }).catch((err) => {
       console.log(err)
