@@ -19,7 +19,7 @@
             <el-input v-model="yearSearch[1]" style="width:60px" placeholder="止" />
           </div>
           <div class="searchItem">
-            <el-button icon="el-icon-search" type="primary" @click="seachOn">搜索</el-button>
+            <el-button icon="el-icon-search" type="primary" @click="searchOn">搜索</el-button>
             <el-button icon="el-icon-link" type="info" @click="reset">重置</el-button>
           </div>
         </div>
@@ -40,12 +40,14 @@
 import { getTestList } from '@/api/test.js'
 import ListLayout from '@/components/ListLayout/index.vue'
 import LbTable from '@/components/lb-table/lb-table.vue'
+import searchMixin from '@/mixins/searchMixin.js'
 export default {
   name: 'TestContent',
   components: {
     ListLayout,
     LbTable
   },
+  mixins: [searchMixin],
   data() {
     return {
       formData: {
@@ -95,7 +97,7 @@ export default {
         ],
         data: []
       },
-      options: [''],
+      options: [],
       seletorValue: '',
       nickSeach: '',
       yearSearch: [],
@@ -121,26 +123,8 @@ export default {
     }).catch((err) => {
       console.log(err)
     })
-  },
-  methods: {
-    seachOn() {
-      // 将年龄限制深拷贝赋值给用于判断的数值（防止出现不输入年龄点搜索也会由于双向绑定在搜索框内填入数值）
-      this.yearSearchHidden = JSON.parse(JSON.stringify(this.yearSearch))
-      // 缺哪个数值就补全哪个
-      if (typeof this.yearSearchHidden[0] === 'undefined') this.yearSearchHidden[0] = 0
-      if (typeof this.yearSearchHidden[1] === 'undefined') this.yearSearchHidden[1] = 120
-
-      this.formData.data = this.formData.data.filter(item => item.subject === this.seletorValue && item.nick.includes(this.nickSeach) && (item.year >= this.yearSearchHidden[0] && item.year <= this.yearSearchHidden[1]))
-
-      console.log(this.yearSearchHidden[0], this.yearSearchHidden[1])
-    },
-    reset() {
-      this.options = ['']
-      this.seletorValue = ''
-      this.nickSeach = ''
-      this.formData.data = JSON.parse(JSON.stringify(this.backUp))
-    }
   }
+
 }
 </script>
 
