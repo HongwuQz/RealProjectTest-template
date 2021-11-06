@@ -103,7 +103,7 @@ export const constantRoutes = [
         path: '/test',
         name: 'test',
         component: () => import('@/views/test/index'),
-        meta: { title: 'Test', icon: 'form' }
+        meta: { title: 'Test', icon: 'form', breadcrumb: false }
       },
       {
         path: 'menu1',

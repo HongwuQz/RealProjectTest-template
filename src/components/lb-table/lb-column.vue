@@ -9,8 +9,8 @@
  */
 
 <template>
-  <el-table-column v-bind="$attrs"
-    v-on="$listeners"
+  <el-table-column
+    v-bind="$attrs"
     :prop="column.prop"
     :label="column.label"
     :type="column.type"
@@ -37,28 +37,35 @@
     :filter-placement="column.filterPlacement"
     :filter-multiple="column.filterMultiple"
     :filter-method="column.filterMethod"
-    :filtered-value="column.filteredValue">
+    :filtered-value="column.filteredValue"
+    v-on="$listeners"
+  >
 
-    <template slot="header"
-      slot-scope="scope">
-      <lb-render v-if="column.renderHeader"
+    <template
+      slot="header"
+      slot-scope="scope"
+    >
+      <lb-render
+        v-if="column.renderHeader"
         :scope="scope"
-        :render="column.renderHeader">
-      </lb-render>
+        :render="column.renderHeader"
+      />
       <span v-else>{{ scope.column.label }}</span>
     </template>
 
     <template slot-scope="scope">
-      <lb-render :scope="scope"
-        :render="column.render">
-      </lb-render>
+      <lb-render
+        :scope="scope"
+        :render="column.render"
+      />
     </template>
 
     <template v-if="column.children">
-      <lb-column v-for="(col, index) in column.children"
+      <lb-column
+        v-for="(col, index) in column.children"
         :key="index"
-        :column="col">
-      </lb-column>
+        :column="col"
+      />
     </template>
   </el-table-column>
 </template>
@@ -68,16 +75,24 @@ import LbRender from './lb-render'
 import forced from './forced.js'
 export default {
   name: 'LbColumn',
+  components: {
+    LbRender
+  },
   props: {
     column: Object,
     headerAlign: String,
     align: String
   },
-  components: {
-    LbRender
+  watch: {
+    column: {
+      handler() {
+        this.setColumn()
+      },
+      immediate: true
+    }
   },
   methods: {
-    setColumn () {
+    setColumn() {
       if (this.column.type) {
         this.column.renderHeader = forced[this.column.type].renderHeader
         this.column.render = this.column.render || forced[this.column.type].renderCell
@@ -92,14 +107,6 @@ export default {
           return <span>{ scope.row[scope.column.property] }</span>
         }
       }
-    }
-  },
-  watch: {
-    column: {
-      handler () {
-        this.setColumn()
-      },
-      immediate: true
     }
   }
 }
