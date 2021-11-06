@@ -90,6 +90,21 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/test',
+    component: Layout,
+    redirect: '/test/test',
+    name: 'test',
+    children: [
+      {
+        path: '/test/test',
+        component: () => import('@/views/test/index'),
+        name: 'Test',
+        meta: { title: 'Test', icon: 'form', breadcrumb: false }
+      }
+
+    ]
+  },
+  {
     path: '/nested',
     component: Layout,
     redirect: '/nested/menu1',
@@ -99,12 +114,6 @@ export const constantRoutes = [
       icon: 'nested'
     },
     children: [
-      {
-        path: '/test',
-        name: 'test',
-        component: () => import('@/views/test/index'),
-        meta: { title: 'Test', icon: 'form', breadcrumb: false }
-      },
       {
         path: 'menu1',
         component: () => import('@/views/nested/menu1/index'), // Parent router-view
